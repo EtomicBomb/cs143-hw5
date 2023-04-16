@@ -20,7 +20,6 @@ class YourModel(tf.keras.Model):
         # TASK 1
         # TODO: Select an optimizer for your network (see the documentation
         #       for tf.keras.optimizers)
-
         self.optimizer = tf.keras.optimizers.SGD(learning_rate=hp.learning_rate)
 
         # TASK 1
@@ -56,17 +55,33 @@ class YourModel(tf.keras.Model):
         #       Flatten is a useful layer to vectorize activations. 
         #       This saves having to reshape tensors in your network.
 
+
         self.architecture = [
-              tf.keras.layers.Conv2D(10, 5, activation='relu', padding='same'), # num kernels, kernel size
-#              tf.keras.layers.Conv2D(10, 3, kernel_size= activation='relu'),
-#              tf.keras.layers.MaxPool2D(pool_size=(2,2)),
-#              tf.keras.layers.Conv2D(10, 3, kernel_size= activation='relu'),
-#              tf.keras.layers.Conv2D(10, 3, kernel_size= activation='relu'),
-              tf.keras.layers.MaxPool2D(pool_size=(5, 5)),
+              tf.keras.layers.Conv2D(30, 5, activation='relu', padding='same'), # num kernels, kernel size
+              tf.keras.layers.MaxPool2D(pool_size=(2, 2), padding='same'),
+
+              tf.keras.layers.Conv2D(60, 5, activation='relu', padding='same'),
+              tf.keras.layers.MaxPool2D(pool_size=(2, 2), padding='same'),
+              tf.keras.layers.Dropout(0.25),
+
+              tf.keras.layers.Conv2D(90, 5, activation='relu', padding='same'),
+              tf.keras.layers.MaxPool2D(pool_size=(2, 2), padding='same'),
+
               tf.keras.layers.Flatten(),
-              tf.keras.layers.Dense(32, activation='relu'),
+              tf.keras.layers.Dense(150, activation='relu'),
+              tf.keras.layers.Dropout(0.25),
+              tf.keras.layers.Dense(100, activation='relu'),
+              tf.keras.layers.Dropout(0.25),
               tf.keras.layers.Dense(15, activation='softmax'),
         ]
+
+#        self.architecture = [
+#              tf.keras.layers.Conv2D(10, 5, activation='relu', padding='same'), # num kernels, kernel size
+#              tf.keras.layers.MaxPool2D(pool_size=(5, 5)),
+#              tf.keras.layers.Flatten(),
+#              tf.keras.layers.Dense(32, activation='relu'),
+#              tf.keras.layers.Dense(15, activation='softmax'),
+#        ]
 
 
     def call(self, x):
