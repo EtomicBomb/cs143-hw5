@@ -133,12 +133,6 @@ class Datasets():
             img - numpy array of shape (image size, image size, 3)
         """
 
-        # TASK 1
-        # TODO: Standardize the input image. Use self.mean and self.std
-        #       that were calculated in calc_mean_and_std() to perform
-        #       the standardization.
-        # =============================================================
-
         img = (img - self.mean) / self.std
 #        img = 1 + 0.25 * img
 

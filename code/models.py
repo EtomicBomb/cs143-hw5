@@ -17,11 +17,7 @@ class YourModel(tf.keras.Model):
     def __init__(self):
         super(YourModel, self).__init__()
 
-        # TASK 1
-        # TODO: Select an optimizer for your network (see the documentation
-        #       for tf.keras.optimizers)
-#        self.optimizer = tf.keras.optimizers.SGD(learning_rate=hp.learning_rate)
-        self.optimizer = tf.keras.optimizers.Adam()
+        self.optimizer = tf.keras.optimizers.SGD(learning_rate=hp.learning_rate)
 
         # TASK 1
         # TODO: Build your own convolutional neural network with a 
@@ -63,16 +59,16 @@ class YourModel(tf.keras.Model):
 
               tf.keras.layers.Conv2D(60, 5, activation='relu', padding='same'),
               tf.keras.layers.MaxPool2D(pool_size=(2, 2), padding='same'),
-              tf.keras.layers.Dropout(0.25),
+#              tf.keras.layers.Dropout(0.25), # XXX: fix
 
               tf.keras.layers.Conv2D(90, 5, activation='relu', padding='same'),
               tf.keras.layers.MaxPool2D(pool_size=(2, 2), padding='same'),
 
               tf.keras.layers.Flatten(),
               tf.keras.layers.Dense(150, activation='relu'),
-              tf.keras.layers.Dropout(0.25),
+#              tf.keras.layers.Dropout(0.25), # XXX: fix
               tf.keras.layers.Dense(75, activation='relu'),
-              tf.keras.layers.Dropout(0.25),
+#              tf.keras.layers.Dropout(0.25), # XXX: fix
               tf.keras.layers.Dense(15, activation='softmax'),
         ]
 

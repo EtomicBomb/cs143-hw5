@@ -52,6 +52,7 @@
 \usepackage{microtype}
 \usepackage{times}
 \usepackage{booktabs}
+\usepackage{float}
 
 % python code format: https://github.com/olivierverdier/python-latex-highlighting
 \usepackage{pythonhighlight}
@@ -97,51 +98,57 @@ model from scratch.
 
 \section*{Result}
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=5cm]{task1v0-2.png}
+\begin{figure}[H]
+    \includegraphics[width=10cm]{task1v0-2.png}
     \caption{Task 1:Training the small model on CPU. Somehow this was very fast.}
     \label{fig:result1}
 \end{figure}
 
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=5cm]{complete-parameters.png}
-    \includegraphics[width=5cm]{complete-a.png}
-    \includegraphics[width=5cm]{complete-b.png}
+\begin{figure}[H]
+    \includegraphics[width=10cm]{complete-parameters.png}
+    \includegraphics[width=10cm]{complete-a.png}
+    \includegraphics[width=10cm]{complete-b.png}
     \caption{Progress training the complete model}
-    \label{fig:result1}
-\end{figure}
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=5cm]{vgg-parameters.png}
-    \includegraphics[width=5cm]{vgg-a.png}
-    \includegraphics[width=5cm]{vgg-b.png}
-    \caption{Progress training head of the vgg model.}
     \label{fig:result1}
 \end{figure}
 
 % TODO: changes to performance after adding 
 
-\begin{table}[h]
+\begin{table}[H]
     \centering
-    \begin{tabular}{lr}
+    \begin{tabular}{lcr}
         \toprule
-        With & Sparse categorization accuracy \\
+        With & Epochs & Sparse categorization accuracy \\
         \midrule
-        Base & 1 \\
-        Standardization & 1000 \\
-        Data augmentation & 1000 \\
-        Regularization & 0.6873 \\
+        Base & 3 & 0.2315 \\
+        Standardization & 3& 0.1300 \\
+        Data augmentation & 3 & 0.1008 \\
+        Regularization & 56 & 0.6873 \\
         \bottomrule
     \end{tabular}
-    \caption{Task 1 performance after adding:}
+    \caption{Task 1 performance after adding each intermediate sophistication. 
+I was able to train the network with full standardization, augmentation,
+and regularization on Colab. The intermediate networks were trained on my laptop
+(which only has a cpu -- thus limited epochs). This is because I was not able to
+access Colab GPUs due to availability limits when I went back to do at the
+intermediate stages.
+I believe the decreasing accuracy as more sophistication was added is just
+because of random chance and high variation from few epochs.
+I noticed that before adding data augmentation (on my lost intermediate run, when I still
+could use Colab) the training accuracy was able to get to basically 100, while
+the test accuracy stayed low - maybe in the 20s or 30s. When I added
+augmentation, the accuracy in training and testing coincided.}
     \label{tab:table1}
 \end{table}
 
-\begin{table}[h]
+\begin{figure}[H]
+    \includegraphics[width=10cm]{intermediate-cpu.png}
+    \caption{Task 1: Progress training the intermediate models.}
+    \label{fig:result1}
+\end{figure}
+
+
+\begin{table}[H]
     \centering
     \begin{tabular}{lr}
         \toprule
@@ -155,27 +162,44 @@ model from scratch.
 \end{table}
 
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=5cm]{bedroom-should-living-room.png}
-    \includegraphics[width=5cm]{lime-bedroom-should-living-room.png}
-    \includegraphics[width=5cm]{procon-bedroom-should-living-room.png}
-    \includegraphics[width=5cm]{top5-bedroom-should-living-room.png}
-    \includegraphics[width=5cm]{weight-bedroom-should-living-room.png}
-    \caption{This is a bedroom, but was predicted as a living room.  Curious.}
+\begin{figure}[H]
+    \includegraphics[width=7cm]{bedroom-should-living-room.png}
+    \includegraphics[width=7cm]{lime-bedroom-should-living-room.png}
+    \includegraphics[width=7cm]{procon-bedroom-should-living-room.png}
+    \includegraphics[width=7cm]{top5-bedroom-should-living-room.png}
+    \includegraphics[width=7cm]{weight-bedroom-should-living-room.png}
+    \caption{This is a bedroom, but was predicted as a living room.  Curious.
+    This model seemed to focus on the middle left of the image, especially the
+    floor and part of the chair. It also seemed to attend to the window. These
+    features -- floors, chairs, and windows are all part of both bedrooms and living
+    rooms. If it only attended to these features it's not suprising that it
+    would get confused. I was not able to figure out whether it likes using the
+    sky for its successful classifications.}
     \label{fig:result1}
 \end{figure}
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=5cm]{suburb-should-insidecity.png}
-    \includegraphics[width=5cm]{lime-suburb-should-insidecity.png}
-    \includegraphics[width=5cm]{procon-suburb-should-insidecity.png}
-    \includegraphics[width=5cm]{top5-suburb-should-inside-city.png}
-    \includegraphics[width=5cm]{weight-suburb-should-insidecity.png}
-    \caption{This is an inside city, but was predicted as a suburb.  Curious.}
+\begin{figure}[H]
+    \includegraphics[width=7cm]{suburb-should-insidecity.png}
+    \includegraphics[width=7cm]{lime-suburb-should-insidecity.png}
+    \includegraphics[width=7cm]{procon-suburb-should-insidecity.png}
+    \includegraphics[width=7cm]{top5-suburb-should-inside-city.png}
+    \includegraphics[width=7cm]{weight-suburb-should-insidecity.png}
+    \caption{This is an inside city, but was predicted as a suburb.  Curious. It
+    seems like the model didn't really care about the architecture. Instead it
+    focused on the sky and the front of a car, and part of the street. It would
+    make sense that it would confuse an outdoor image of a suburb with a city if
+    it was just looking at the sky. }
     \label{fig:result1}
 \end{figure}
+
+\begin{figure}[H]
+    \includegraphics[width=10cm]{vgg-parameters.png}
+    \includegraphics[width=10cm]{vgg-a.png}
+    \includegraphics[width=10cm]{vgg-b.png}
+    \caption{Task 3: Progress training head of the vgg model.}
+    \label{fig:result1}
+\end{figure}
+
 
 % TODO: explanation
 
