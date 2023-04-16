@@ -140,6 +140,7 @@ class Datasets():
         # =============================================================
 
         img = (img - self.mean) / self.std
+#        img = 1 + 0.25 * img
 
         # =============================================================
 
@@ -216,7 +217,8 @@ class Datasets():
                 rotation_range=5,
                 width_shift_range=30,
                 height_shift_range=30,
-                brightness_range=(0.6,1.0),
+                channel_shift_range=30,
+                brightness_range=(0.7,1.3),
                 horizontal_flip=True)
 
             # ============================================================

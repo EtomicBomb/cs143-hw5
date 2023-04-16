@@ -159,9 +159,11 @@ class VGGModel(tf.keras.Model):
 
         self.head = [
             tf.keras.layers.Flatten(),
-            tf.keras.layers.Dense(512, activation='relu'),
+            tf.keras.layers.Dense(400, activation='relu'),
+            tf.keras.layers.Dropout(0.25),
             tf.keras.layers.Dense(256, activation='relu'),
             tf.keras.layers.Dense(128, activation='relu'),
+            tf.keras.layers.Dropout(0.25),
             tf.keras.layers.Dense(15, activation='softmax'),
         ]
 
@@ -186,5 +188,5 @@ class VGGModel(tf.keras.Model):
         #       for tf.keras.losses)
         #       Read the documentation carefully, some might not work with our 
         #       model!
-        loss = tf.keras.losses.CategoricalCrossentropy()
+        loss = tf.keras.losses.SparseCategoricalCrossentropy()
         return loss(labels, predictions)
