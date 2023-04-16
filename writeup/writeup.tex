@@ -89,33 +89,71 @@
 
 \section*{Project Overview}
 
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. See Equation~\ref{eq:one}.
-
-\begin{equation}
-a = b + c
-\label{eq:one}
-\end{equation}
+This project is about training a convolutional neural network to perform scene
+classification. We train a head on a pre-trained model, and create and train a
+model from scratch.
 
 \section*{Implementation Detail}
 
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-My code snippet highlights an interesting point.
-\begin{python}
-one = 1;
-two = one + one;
-if two == 2
-    disp( 'This computer is not broken.' );
-end
-\end{python}
-
 \section*{Result}
 
-\begin{enumerate}
-    \item Result 1 was a total failure, because...
-    \item Result 2 (Figure~\ref{fig:result1}, left) was surprising, because...
-    \item Result 3 (Figure~\ref{fig:result1}, right) blew my socks off, because...
-\end{enumerate}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=5cm]{task1v0-2.png}
+    \caption{Task 1:Training the small model on CPU. Somehow this was very fast.}
+    \label{fig:result1}
+\end{figure}
+
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=5cm]{complete-parameters.png}
+    \includegraphics[width=5cm]{complete-a.png}
+    \includegraphics[width=5cm]{complete-b.png}
+    \caption{Progress training the complete model}
+    \label{fig:result1}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=5cm]{vgg-parameters.png}
+    \includegraphics[width=5cm]{vgg-a.png}
+    \includegraphics[width=5cm]{vgg-b.png}
+    \caption{Progress training head of the vgg model.}
+    \label{fig:result1}
+\end{figure}
+
+% TODO: changes to performance after adding 
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{lr}
+        \toprule
+        With & Sparse categorization accuracy \\
+        \midrule
+        Base & 1 \\
+        Standardization & 1000 \\
+        Data augmentation & 1000 \\
+        Regularization & 0.6873 \\
+        \bottomrule
+    \end{tabular}
+    \caption{Task 1 performance after adding:}
+    \label{tab:table1}
+\end{table}
+
+\begin{table}[h]
+    \centering
+    \begin{tabular}{lr}
+        \toprule
+        Type & Sparse categorization accuracy \\
+        \midrule
+        Total & 0.9106 \\
+        \bottomrule
+    \end{tabular}
+    \caption{Task 3 performance}
+    \label{tab:table2}
+\end{table}
+
 
 \begin{figure}[h]
     \centering
@@ -139,77 +177,6 @@ end
     \label{fig:result1}
 \end{figure}
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=5cm]{task1v0-2.png}
-    \caption{Training the small model on CPU. Somehow this was very fast.}
-    \label{fig:result1}
-\end{figure}
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=5cm]{complete-a.png}
-    \includegraphics[width=5cm]{complete-b.png}
-    \caption{Progress training the complete model}
-    \label{fig:result1}
-\end{figure}
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=5cm]{vgg-a.png}
-    \includegraphics[width=5cm]{vgg-b.png}
-    \caption{Progress training the complete model}
-    \label{fig:result1}
-\end{figure}
-
-
-
-
-
-
-
-
-
-
-
-
-
-My results are summarized in Table~\ref{tab:table1}.
-
-\begin{table}[h]
-    \centering
-    \begin{tabular}{lr}
-        \toprule
-        Condition & Time (seconds) \\
-        \midrule
-        Test 1 & 1 \\
-        Test 2 & 1000 \\
-        \bottomrule
-    \end{tabular}
-    \caption{Stunning revelation about the efficiency of my code.}
-    \label{tab:table1}
-\end{table}
-
-\section*{Extra Credit (Optional)}
-\begin{enumerate}
-   
-    \item Implementation A, code snippets, and results
-        \begin{python}
-        one = 1;
-        two = one + one;
-        if two == 2
-            disp( 'This computer is not broken.' );
-        end
-        \end{python}
-    
-    \item Implementation B, code snippets, and results
-        \begin{python}
-        one = 1;
-        two = one + one;
-        if two == 2
-            disp( 'This computer is not broken.' );
-        end
-        \end{python}
-\end{enumerate}
+% TODO: explanation
 
 \end{document}
