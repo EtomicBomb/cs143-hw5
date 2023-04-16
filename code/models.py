@@ -20,7 +20,8 @@ class YourModel(tf.keras.Model):
         # TASK 1
         # TODO: Select an optimizer for your network (see the documentation
         #       for tf.keras.optimizers)
-        self.optimizer = tf.keras.optimizers.SGD(learning_rate=hp.learning_rate)
+#        self.optimizer = tf.keras.optimizers.SGD(learning_rate=hp.learning_rate)
+        self.optimizer = tf.keras.optimizers.Adam()
 
         # TASK 1
         # TODO: Build your own convolutional neural network with a 
@@ -70,7 +71,7 @@ class YourModel(tf.keras.Model):
               tf.keras.layers.Flatten(),
               tf.keras.layers.Dense(150, activation='relu'),
               tf.keras.layers.Dropout(0.25),
-              tf.keras.layers.Dense(100, activation='relu'),
+              tf.keras.layers.Dense(75, activation='relu'),
               tf.keras.layers.Dropout(0.25),
               tf.keras.layers.Dense(15, activation='softmax'),
         ]
