@@ -21,6 +21,8 @@ class YourModel(tf.keras.Model):
         # TODO: Select an optimizer for your network (see the documentation
         #       for tf.keras.optimizers)
 
+        self.optimizer = tf.keras.optimizers.SGD(learning_rate=hp.learning_rate)
+
         # TASK 1
         # TODO: Build your own convolutional neural network with a 
         #       15 million parameter budget. The input image will be 
@@ -55,8 +57,17 @@ class YourModel(tf.keras.Model):
         #       This saves having to reshape tensors in your network.
 
         self.architecture = [
-              ## Add layers here separated by commas.
+              tf.keras.layers.Conv2D(10, 5, activation='relu', padding='same'), # num kernels, kernel size
+#              tf.keras.layers.Conv2D(10, 3, kernel_size= activation='relu'),
+#              tf.keras.layers.MaxPool2D(pool_size=(2,2)),
+#              tf.keras.layers.Conv2D(10, 3, kernel_size= activation='relu'),
+#              tf.keras.layers.Conv2D(10, 3, kernel_size= activation='relu'),
+              tf.keras.layers.MaxPool2D(pool_size=(5, 5)),
+              tf.keras.layers.Flatten(),
+              tf.keras.layers.Dense(32, activation='relu'),
+              tf.keras.layers.Dense(15, activation='softmax'),
         ]
+
 
     def call(self, x):
         """ Passes input image through the network. """
@@ -69,14 +80,9 @@ class YourModel(tf.keras.Model):
     @staticmethod
     def loss_fn(labels, predictions):
         """ Loss function for the model. """
-
-        # TASK 1
-        # TODO: Select a loss function for your network 
-        #       (see the documentation for tf.keras.losses)
-
-        pass
-
-
+        loss = tf.keras.losses.SparseCategoricalCrossentropy()
+        return loss(labels, predictions)
+        
 class VGGModel(tf.keras.Model):
     def __init__(self):
         super(VGGModel, self).__init__()
@@ -84,11 +90,9 @@ class VGGModel(tf.keras.Model):
         # TASK 3
         # TODO: Select an optimizer for your network (see the documentation
         #       for tf.keras.optimizers)
-
-        self.optimizer = None
+        self.optimizer = tf.keras.optimizers.Adam(learning_rate=hp.learning_rate)
 
         # Don't change the below:
-
         self.vgg16 = [
             # Block 1
             Conv2D(64, 3, 1, padding="same",
@@ -132,15 +136,23 @@ class VGGModel(tf.keras.Model):
         # TODO: Make all layers in self.vgg16 non-trainable. This will freeze the
         #       pretrained VGG16 weights into place so that only the classificaiton
         #       head is trained.
+        for layer in self.vgg16:
+            layer.trainable = False
 
         # TODO: Write a classification head for our 15-scene classification task.
 
-        self.head = []
+        self.head = [
+            tf.keras.layers.Flatten(),
+            tf.keras.layers.Dense(512, activation='relu'),
+            tf.keras.layers.Dense(256, activation='relu'),
+            tf.keras.layers.Dense(128, activation='relu'),
+            tf.keras.layers.Dense(15, activation='softmax'),
+        ]
 
         # Don't change the below:
         self.vgg16 = tf.keras.Sequential(self.vgg16, name="vgg_base")
         self.head = tf.keras.Sequential(self.head, name="vgg_head")
-
+        
     def call(self, x):
         """ Passes the image through the network. """
 
@@ -158,5 +170,5 @@ class VGGModel(tf.keras.Model):
         #       for tf.keras.losses)
         #       Read the documentation carefully, some might not work with our 
         #       model!
-
-        pass
+        loss = tf.keras.losses.CategoricalCrossentropy()
+        return loss(labels, predictions)

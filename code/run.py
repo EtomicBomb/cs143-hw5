@@ -163,6 +163,7 @@ def train(model, datasets, checkpoint_path, logs_path, init_epoch):
         callback_list.append(ConfusionMatrixLogger(logs_path, datasets))
 
     # Begin training
+    print(datasets.train_data)
     model.fit(
         x=datasets.train_data,
         validation_data=datasets.test_data,
